@@ -1,0 +1,7 @@
+[
+  {
+    "Listen": "https://127.0.42.1",
+    "Forward": "https://localhost:7169/",
+    "Certificate": "soon"
+  }
+]
