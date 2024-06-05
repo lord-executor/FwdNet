@@ -3,6 +3,7 @@
   "profiles": {
     "https": {
       "commandName": "Project",
+      "commandLineArgs": "fwd.config.json",
       "dotnetRunMessages": true,
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
