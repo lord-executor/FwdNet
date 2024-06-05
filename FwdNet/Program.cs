@@ -1,3 +1,4 @@
+using System.Net;
 using FwdNet;
 using Yarp.ReverseProxy.Configuration;
 
@@ -25,7 +26,16 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddSingleton(forwardingConfig);
 builder.Services.AddSingleton<IProxyConfigProvider, ForwardingProxyConfigProvider>();
 
-builder.WebHost.UseUrls(forwardingConfig.Rules.Select(r => r.Listen).ToArray());
+builder.WebHost.ConfigureKestrel((context, options) =>
+{
+    foreach (var rule in forwardingConfig.Rules)
+    {
+        var listenUri = new Uri(rule.Listen);
+        options.Listen(IPAddress.Parse(listenUri.Host), listenUri.Port,
+            listenOptions => { listenOptions.UseHttps("certificates/fwd.local.pfx", "fwd"); });
+    }
+});
+
 builder.Services.AddReverseProxy();
 
 var app = builder.Build();

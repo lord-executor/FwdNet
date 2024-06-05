@@ -3,6 +3,12 @@
     "Listen": "https://127.0.42.1",
     "ListenHost": "fwd.local",
     "Forward": "https://localhost:7169/",
-    "Certificate": "soon"
+    "Certificate": "certificates/fwd.local.pfx"
+  },
+  {
+    "Listen": "https://127.0.42.2",
+    "ListenHost": "test.fwd.local",
+    "Forward": "https://localhost:7169/",
+    "Certificate": ""
   }
 ]
