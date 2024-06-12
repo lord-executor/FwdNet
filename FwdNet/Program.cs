@@ -32,7 +32,7 @@ builder.WebHost.ConfigureKestrel((context, options) =>
     {
         var listenUri = new Uri(rule.Listen);
         options.Listen(IPAddress.Parse(listenUri.Host), listenUri.Port,
-            listenOptions => { listenOptions.UseHttps("certificates/fwd.local.pfx", "fwd"); });
+            listenOptions => { listenOptions.UseHttps("certificates/wildcard.fwd.local.pfx", "pwd"); });
     }
 });
 
