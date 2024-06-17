@@ -33,8 +33,7 @@ public class ForwardingProxyConfig : IProxyConfig
                     }
                 }
             });
-
-            var sourceUri = new Uri(rule.Listen);
+            
             _routes.Add(new RouteConfig
             {
                 RouteId = $"route-{index}",
@@ -42,7 +41,7 @@ public class ForwardingProxyConfig : IProxyConfig
                 Match = new RouteMatch
                 {
                     Path = "{**rest}",
-                    Hosts = [rule.ListenHost ?? sourceUri.Host]
+                    Hosts = rule.ListenHost == null ? null : [rule.ListenHost]
                 }
             });
 

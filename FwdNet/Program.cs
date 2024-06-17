@@ -30,9 +30,17 @@ builder.WebHost.ConfigureKestrel((context, options) =>
 {
     foreach (var rule in forwardingConfig.Rules)
     {
-        var listenUri = new Uri(rule.Listen);
-        options.Listen(IPAddress.Parse(listenUri.Host), listenUri.Port,
-            listenOptions => { listenOptions.UseHttps("certificates/wildcard.fwd.local.pfx", "pwd"); });
+        var listenDef = ListenDef.IsAnyIp(rule.Listen)
+            ? ListenDef.FromAnyIp(rule.Listen)
+            : ListenDef.FromUri(new Uri(rule.Listen));
+
+        options.Listen(listenDef.Address, listenDef.Port, listenOptions =>
+        {
+            if (rule.Certificate != null)
+            {
+                listenOptions.UseHttps(rule.Certificate, rule.CertificatePassword);
+            }
+        });
     }
 });
 
