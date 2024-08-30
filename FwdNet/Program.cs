@@ -1,4 +1,5 @@
 using System.Net;
+using System.Security.Cryptography.X509Certificates;
 using FwdNet;
 using Yarp.ReverseProxy.Configuration;
 
@@ -33,12 +34,21 @@ builder.WebHost.ConfigureKestrel((context, options) =>
         var listenDef = ListenDef.IsAnyIp(rule.Listen)
             ? ListenDef.FromAnyIp(rule.Listen)
             : ListenDef.FromUri(new Uri(rule.Listen));
+        var certUriParser = new CertUriParser();
 
         options.Listen(listenDef.Address, listenDef.Port, listenOptions =>
         {
             if (rule.Certificate != null)
             {
-                listenOptions.UseHttps(rule.Certificate, rule.CertificatePassword);
+                if (certUriParser.IsCertUrl(rule.Certificate))
+                {
+                    var certs = certUriParser.GetCertificates(rule.Certificate);
+                    listenOptions.UseHttps(certs.Single());
+                }
+                else
+                {
+                    listenOptions.UseHttps(rule.Certificate, rule.CertificatePassword);
+                }
             }
         });
     }
