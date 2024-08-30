@@ -8,7 +8,7 @@ public class ForwardingConfig
 
     public ForwardingConfig(string configFile)
     {
-        Rules = JsonSerializer.Deserialize<IList<ForwardingRule>>(File.ReadAllText(configFile))
+        Rules = JsonSerializer.Deserialize(File.ReadAllText(configFile), ForwardingConfigSerializationContext.Default.IListForwardingRule)
             ?? throw new ArgumentException($"Error parsing {configFile}");
     }
 }
