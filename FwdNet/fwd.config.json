@@ -1,14 +1,16 @@
 [
   {
     "Listen": "https://127.0.42.1",
-    "ListenHost": "first.fwd.local",
+    "ListenHost": "fwd.local",
     "Forward": "https://localhost:7169/",
-    "Certificate": "certificates/fwd.local.pfx"
+    "Certificate": "certificates/fwd.local.pfx",
+    "CertificatePassword": "fwd"
   },
   {
     "Listen": "https://127.0.42.2",
     "ListenHost": "test.fwd.local",
     "Forward": "https://localhost:7169/",
-    "Certificate": ""
+    "Certificate": "certificates/wildcard.fwd.local.pfx",
+    "CertificatePassword": "pwd"
   }
 ]

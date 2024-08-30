@@ -12,7 +12,10 @@
 
     <ItemGroup>
       <None Update="certificates\fwd.local.pfx">
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      </None>
+      <None Update="certificates\wildcard.fwd.local.pfx">
+        <CopyToOutputDirectory>Never</CopyToOutputDirectory>
       </None>
     </ItemGroup>
 
