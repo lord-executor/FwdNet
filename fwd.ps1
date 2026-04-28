@@ -31,7 +31,7 @@ function Launch-FwdNet {
         Write-Output $tag > "$PSScriptRoot/build.version"
     }
 
-    & "$PSScriptRoot\FwdNet\bin\Release\net8.0\win-x64\publish\FwdNet.exe" @Args
+    & "$PSScriptRoot\FwdNet\bin\Release\net10.0\win-x64\publish\FwdNet.exe" @Args
 }
 
 Set-Alias -Name "fwd" -Value "Launch-FwdNet"

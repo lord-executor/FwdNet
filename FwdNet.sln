@@ -1,9 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 18
+VisualStudioVersion = 18.5.11716.220 stable
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FwdNet", "FwdNet\FwdNet.csproj", "{8C7C8FD4-4E14-4CE2-82AD-43E6F4AE9356}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SolutionItems", "SolutionItems", "{57133E83-328F-4989-9645-E7B95476E29C}"
 	ProjectSection(SolutionItems) = preProject
+		fwd.ps1 = fwd.ps1
 		README.md = README.md
 	EndProjectSection
 EndProject
@@ -17,5 +21,8 @@ Global
 		{8C7C8FD4-4E14-4CE2-82AD-43E6F4AE9356}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8C7C8FD4-4E14-4CE2-82AD-43E6F4AE9356}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8C7C8FD4-4E14-4CE2-82AD-43E6F4AE9356}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
 	EndGlobalSection
 EndGlobal
