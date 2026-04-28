@@ -3,15 +3,19 @@ function Launch-FwdNet {
     echo $PSScriptRoot
 
     $forceBuild = $false
-    if ($Args.Contains("--build")) {
-        Write-Output "Force build"
-        # When the filtered $Args only contains a single item after filtering, then PowerShell just
-        # assigns the single value to the result instead of an _array_ of that single value. Specifying
-        # [array] as the variable type avoids that but does require a temporary variable as it doesn't
-        # work when directly re-assigning $Args
-        [array] $filtered = $Args | Where-Object { $_ -ne "--build" }
-        $Args = $filtered
-        $forceBuild = $true
+    $useAot = $false
+    $arguments = @()
+    
+    foreach ($a in $Args) {
+        if ($arguments.Contains("--build")) {
+            Write-Output "Force build"
+            $forceBuild = $true
+        } elseif ($arguments.Contains("--aot")) {
+            Write-Output "Use AOT"
+            $useAot = $true
+        } else {
+            $arguments += $a
+        }
     }
 
     $tag = git -C $PSScriptRoot describe --tags --dirty --always 
@@ -27,11 +31,15 @@ function Launch-FwdNet {
 
     if ($doBuild) {
         Write-Output "Building binary with version $tag"
-        dotnet publish "$PSScriptRoot/FwdNet.sln"
+        if ($useAot) {
+            dotnet publish "$PSScriptRoot/FwdNet.sln" /p:PublishAot=true
+        } else {
+            dotnet publish "$PSScriptRoot/FwdNet.sln"
+        }
         Write-Output $tag > "$PSScriptRoot/build.version"
     }
 
-    & "$PSScriptRoot\FwdNet\bin\Release\net10.0\win-x64\publish\FwdNet.exe" @Args
+    & "$PSScriptRoot\FwdNet\bin\Release\net10.0\win-x64\publish\FwdNet.exe" @arguments
 }
 
 Set-Alias -Name "fwd" -Value "Launch-FwdNet"
